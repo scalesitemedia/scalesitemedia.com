@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ScaleSite Media — Web Agency</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&family=Tenor+Sans&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blue:#1A6FD4;
+  --blue-bright:#2489F5;
+  --teal:#1BBFAA;
+  --teal-bright:#22DFC7;
+  --navy:#0A1628;
+  --navy2:#0D1E38;
+  --white:#FFFFFF;
+  --off:#F4F8FF;
+  --gray:#8BA3C0;
+  --border:rgba(26,111,212,0.18);
+  --font-head:'Outfit',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-head);background:var(--white);color:var(--navy);overflow-x:hidden;cursor:none;}
+
+.cursor{position:fixed;width:10px;height:10px;background:var(--blue-bright);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.18s ease;opacity:0.6;}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:0 4%;display:flex;align-items:center;justify-content:space-between;
+  height:72px;background:rgba(255,255,255,0.9);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-bottom:1px solid rgba(26,111,212,0.08);transition:all 0.3s;
+}
+nav.scrolled{box-shadow:0 4px 40px rgba(10,22,40,0.07);}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo img{height:42px;width:auto;}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  font-size:0.85rem;font-weight:500;letter-spacing:0.3px;
+  color:var(--gray);text-decoration:none;transition:color 0.2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+  transform:scaleX(0);transition:transform 0.25s ease;
+}
+.nav-links a:hover{color:var(--blue);}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-cta{
+  background:linear-gradient(135deg,var(--blue),var(--blue-bright));
+  color:white;border:none;padding:0.6rem 1.5rem;border-radius:100px;
+  font-size:0.85rem;font-weight:600;font-family:var(--font-head);
+  cursor:none;text-decoration:none;letter-spacing:0.3px;
+  transition:all 0.25s;box-shadow:0 4px 20px rgba(26,111,212,0.28);
+}
+.nav-cta:hover{box-shadow:0 6px 30px rgba(26,111,212,0.5);transform:translateY(-1px);}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:center;padding:130px 4% 80px;
+  position:relative;overflow:hidden;background:#fff;
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(26,111,212,0.045) 1px,transparent 1px),linear-gradient(90deg,rgba(26,111,212,0.045) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%,black 20%,transparent 100%);
+  animation:gridPan 22s linear infinite;
+}
+@keyframes gridPan{from{background-position:0 0;}to{background-position:64px 64px;}}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.orb1{width:700px;height:700px;top:-200px;right:-150px;background:radial-gradient(circle,rgba(36,137,245,0.11) 0%,transparent 70%);animation:orbF 12s ease-in-out infinite;}
+.orb2{width:500px;height:500px;bottom:-150px;left:-100px;background:radial-gradient(circle,rgba(27,191,170,0.09) 0%,transparent 70%);animation:orbF 16s ease-in-out infinite reverse;}
+.orb3{width:280px;height:280px;top:35%;left:42%;background:radial-gradient(circle,rgba(26,111,212,0.06) 0%,transparent 70%);animation:orbF 10s ease-in-out infinite 3s;}
+@keyframes orbF{0%,100%{transform:translate(0,0);}33%{transform:translate(30px,-20px);}66%{transform:translate(-20px,30px);}}
+
+.hero-content{position:relative;z-index:2;max-width:920px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:2rem;animation:fadeUp 0.8s ease both;}
+.eyebrow-line{width:40px;height:1px;background:linear-gradient(90deg,transparent,var(--blue));}
+.eyebrow-text{
+  font-size:0.7rem;font-weight:700;letter-spacing:3.5px;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero h1{
+  font-size:clamp(3rem,6.5vw,5.8rem);font-weight:800;line-height:1.0;
+  letter-spacing:-3px;color:var(--navy);margin-bottom:1.75rem;
+  animation:fadeUp 0.8s ease 0.1s both;
+}
+.grad-text{
+  background:linear-gradient(135deg,var(--blue) 0%,var(--teal) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.light-text{font-style:normal;font-weight:200;color:var(--gray);}
+.hero-sub{
+  font-size:1.1rem;font-weight:300;color:var(--gray);line-height:1.8;
+  max-width:480px;margin-bottom:3rem;animation:fadeUp 0.8s ease 0.2s both;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp 0.8s ease 0.3s both;}
+.btn-main{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--blue),var(--blue-bright));
+  color:white;padding:1rem 2.2rem;border-radius:100px;
+  font-size:0.95rem;font-weight:600;letter-spacing:0.3px;
+  text-decoration:none;border:none;cursor:none;font-family:var(--font-head);
+  transition:all 0.3s;box-shadow:0 8px 32px rgba(26,111,212,0.35);
+  display:inline-flex;align-items:center;gap:10px;
+}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(26,111,212,0.5);}
+.btn-ghost{
+  background:transparent;color:var(--navy);padding:1rem 2.2rem;border-radius:100px;
+  font-size:0.95rem;font-weight:500;text-decoration:none;
+  border:1.5px solid var(--border);cursor:none;font-family:var(--font-head);
+  letter-spacing:0.3px;transition:all 0.3s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:rgba(26,111,212,0.04);}
+
+.hero-float{
+  position:absolute;right:4%;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:1rem;
+  animation:fadeUp 1s ease 0.5s both;z-index:2;
+}
+.float-card{
+  background:rgba(255,255,255,0.92);border:1px solid rgba(26,111,212,0.13);
+  border-radius:16px;padding:1.1rem 1.4rem;backdrop-filter:blur(20px);
+  box-shadow:0 8px 32px rgba(10,22,40,0.07);min-width:210px;
+}
+.float-card-label{font-size:0.68rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:5px;}
+.float-card-val{
+  font-size:1.7rem;font-weight:800;letter-spacing:-1px;
+  background:linear-gradient(135deg,var(--blue),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.float-card-sub{font-size:0.72rem;color:var(--gray);margin-top:2px;}
+.float-card:nth-child(2){animation:floatC 6s ease-in-out infinite 1s;}
+.float-card:nth-child(3){animation:floatC 6s ease-in-out infinite 2s;}
+@keyframes floatC{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
+
+/* MARQUEE */
+.marquee-strip{
+  padding:1.5rem 0;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);
+  overflow:hidden;position:relative;z-index:2;
+}
+.marquee-track{display:flex;gap:3rem;width:max-content;animation:marquee 28s linear infinite;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.marquee-item{
+  display:flex;align-items:center;gap:10px;
+  font-size:0.75rem;font-weight:600;letter-spacing:2.5px;
+  text-transform:uppercase;color:rgba(255,255,255,0.35);white-space:nowrap;
+}
+.marquee-dot{width:5px;height:5px;border-radius:50%;background:linear-gradient(135deg,var(--blue-bright),var(--teal-bright));flex-shrink:0;}
+
+/* SERVICES */
+#services{padding:120px 4%;background:var(--white);position:relative;overflow:hidden;}
+#services::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
+.section-eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:1.25rem;}
+.section-eyebrow span{
+  font-size:0.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.section-eyebrow::before{content:'';display:block;width:28px;height:1px;background:linear-gradient(90deg,var(--blue),var(--teal));}
+.section-heading{
+  font-size:clamp(2rem,4vw,3.2rem);font-weight:800;letter-spacing:-2px;
+  color:var(--navy);line-height:1.05;margin-bottom:1rem;
+}
+.section-sub{font-size:1rem;font-weight:300;color:var(--gray);line-height:1.8;max-width:460px;margin-bottom:4rem;}
+
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5px;border:1.5px solid var(--border);
+  border-radius:24px;overflow:hidden;background:var(--border);
+}
+.service-card{
+  background:var(--white);padding:2.5rem 2rem;
+  position:relative;overflow:hidden;transition:all 0.35s ease;
+}
+.service-card:hover{background:var(--off);}
+.service-num{
+  font-size:0.68rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  background:linear-gradient(90deg,var(--blue),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1.25rem;
+}
+.svc-icon{
+  width:46px;height:46px;border-radius:13px;
+  background:linear-gradient(135deg,rgba(26,111,212,0.09),rgba(27,191,170,0.07));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;margin-bottom:1.1rem;
+  border:1px solid rgba(26,111,212,0.09);transition:all 0.35s;
+}
+.service-card:hover .svc-icon{background:linear-gradient(135deg,var(--blue),var(--teal));border-color:transparent;}
+.service-card h3{font-size:1.02rem;font-weight:700;color:var(--navy);margin-bottom:0.55rem;letter-spacing:-0.3px;}
+.service-card p{font-size:0.86rem;font-weight:300;color:var(--gray);line-height:1.7;}
+.svc-arrow{
+  position:absolute;bottom:1.75rem;right:1.75rem;
+  width:30px;height:30px;border-radius:50%;
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;color:var(--gray);transition:all 0.3s;opacity:0;
+}
+.service-card:hover .svc-arrow{opacity:1;border-color:var(--blue);color:var(--blue);}
+
+/* WORK */
+#work{padding:120px 4%;background:var(--navy);position:relative;overflow:hidden;}
+#work::before{
+  content:'';position:absolute;inset:0;
+  background-image:linear-gradient(rgba(26,111,212,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(26,111,212,0.07) 1px,transparent 1px);
+  background-size:80px 80px;
+}
+#work .section-heading{color:white;}
+#work .section-sub{color:rgba(255,255,255,0.4);}
+.demo-tabs{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:2rem;position:relative;z-index:2;}
+.demo-tab{
+  padding:0.55rem 1.4rem;border-radius:100px;font-size:0.82rem;font-weight:600;letter-spacing:0.3px;
+  border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);
+  color:rgba(255,255,255,0.45);cursor:none;font-family:var(--font-head);transition:all 0.25s;
+}
+.demo-tab:hover{border-color:rgba(26,111,212,0.5);color:rgba(255,255,255,0.75);background:rgba(26,111,212,0.1);}
+.demo-tab.active{background:linear-gradient(135deg,var(--blue),var(--blue-bright));border-color:transparent;color:white;box-shadow:0 4px 16px rgba(26,111,212,0.4);}
+.demo-stage{position:relative;z-index:2;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);box-shadow:0 40px 100px rgba(0,0,0,0.4),0 0 0 1px rgba(26,111,212,0.2);}
+.demo-chrome{background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);padding:0.8rem 1.25rem;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.chrome-dots{display:flex;gap:6px;}
+.chrome-dot{width:11px;height:11px;border-radius:50%;}
+.chrome-dot.red{background:#FF5F57;}
+.chrome-dot.yellow{background:#FEBC2E;}
+.chrome-dot.green{background:#28C840;}
+.chrome-url{flex:1;background:rgba(255,255,255,0.06);border-radius:8px;padding:0.3rem 1rem;font-size:0.78rem;color:rgba(255,255,255,0.3);font-family:monospace;}
+.demo-frame{width:100%;height:600px;border:none;display:block;background:#fff;}
+.demo-footer{background:rgba(255,255,255,0.03);padding:1.25rem 1.5rem;border-top:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.demo-footer h4{font-size:0.95rem;font-weight:700;color:white;letter-spacing:-0.3px;}
+.demo-footer span{font-size:0.78rem;color:rgba(255,255,255,0.35);}
+.demo-tag{padding:0.25rem 0.9rem;border-radius:100px;font-size:0.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:linear-gradient(135deg,rgba(26,111,212,0.2),rgba(27,191,170,0.15));color:var(--teal-bright);border:1px solid rgba(27,191,170,0.2);}
+.demo-open{font-size:0.8rem;font-weight:600;color:var(--blue-bright);text-decoration:none;transition:color 0.2s;}
+.demo-open:hover{color:var(--teal-bright);}
+
+/* PROCESS */
+#process{padding:120px 4%;background:var(--off);position:relative;}
+#process::before,#process::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);}
+#process::before{top:0;}#process::after{bottom:0;}
+.process-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:1rem;position:relative;}
+.process-row::before{
+  content:'';position:absolute;top:35px;
+  left:calc(12.5% + 16px);right:calc(12.5% + 16px);
+  height:1px;background:linear-gradient(90deg,var(--blue),var(--teal));opacity:0.25;
+}
+.process-step{padding:2rem 1.5rem;text-align:center;position:relative;}
+.step-dot{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--teal));
+  margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;font-weight:800;color:white;
+  box-shadow:0 4px 16px rgba(26,111,212,0.4);position:relative;z-index:1;
+}
+.process-step h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.5rem;letter-spacing:-0.3px;}
+.process-step p{font-size:0.82rem;font-weight:300;color:var(--gray);line-height:1.65;}
+
+/* TESTIMONIALS */
+#testimonials{padding:120px 4%;background:var(--white);position:relative;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.testi-card{
+  padding:2rem;border-radius:20px;border:1px solid var(--border);
+  background:var(--white);position:relative;overflow:hidden;transition:all 0.3s;
+}
+.testi-card::before{
+  content:'\201C';position:absolute;top:-10px;right:1.5rem;
+  font-size:8rem;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,var(--blue),var(--teal));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  opacity:0.1;font-family:Georgia,serif;
+}
+.testi-card:hover{border-color:rgba(26,111,212,0.22);box-shadow:0 20px 60px rgba(26,111,212,0.08);transform:translateY(-4px);}
+.testi-stars{display:flex;gap:3px;margin-bottom:1rem;}
+.star{width:13px;height:13px;background:linear-gradient(135deg,var(--blue),var(--teal));clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);}
+.testi-card blockquote{font-size:0.88rem;font-weight:300;color:var(--gray);line-height:1.8;margin-bottom:1.5rem;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:white;flex-shrink:0;}
+.testi-author h5{font-size:0.87rem;font-weight:700;color:var(--navy);letter-spacing:-0.2px;}
+.testi-author span{font-size:0.73rem;color:var(--gray);}
+
+/* CTA */
+#contact{padding:120px 4%;background:var(--navy);text-align:center;position:relative;overflow:hidden;}
+.cglow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;}
+.cg1{width:800px;height:600px;background:radial-gradient(ellipse,rgba(26,111,212,0.15) 0%,transparent 65%);}
+.cg2{width:600px;height:400px;background:radial-gradient(ellipse,rgba(27,191,170,0.08) 0%,transparent 65%);}
+#contact .section-eyebrow{justify-content:center;}
+#contact .section-heading{color:white;margin:0 auto 1rem;text-align:center;}
+#contact .section-sub{color:rgba(255,255,255,0.4);margin:0 auto 3rem;text-align:center;}
+.contact-methods{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+.contact-card{
+  display:flex;align-items:center;gap:12px;padding:1rem 1.75rem;
+  border-radius:16px;border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.04);backdrop-filter:blur(10px);
+  text-decoration:none;color:white;transition:all 0.3s;font-size:0.95rem;font-weight:500;
+}
+.contact-card:hover{border-color:rgba(26,111,212,0.5);background:rgba(26,111,212,0.1);transform:translateY(-3px);box-shadow:0 16px 40px rgba(26,111,212,0.2);}
+.contact-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--blue),var(--teal));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+
+footer{background:var(--navy2);padding:1.75rem 4%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:1px solid rgba(255,255,255,0.05);}
+.footer-logo img{height:28px;opacity:0.65;}
+footer p{font-size:0.73rem;color:rgba(255,255,255,0.22);}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.d1{transition-delay:0.08s;}.d2{transition-delay:0.16s;}.d3{transition-delay:0.24s;}.d4{transition-delay:0.32s;}
+
+@media(max-width:960px){
+  .hero-float{display:none;}
+  .services-grid{grid-template-columns:1fr 1fr;}
+  .testi-grid{grid-template-columns:1fr;}
+  .process-row{grid-template-columns:1fr 1fr;}
+  .process-row::before{display:none;}
+  nav .nav-links{display:none;}
+}
+@media(max-width:600px){
+  .services-grid{grid-template-columns:1fr;}
+  .process-row{grid-template-columns:1fr;}
+  .demo-frame{height:380px;}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <img src="ScaleSiteMedia_LOGO.png" alt="ScaleSite Media" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <span style="display:none;font-size:1.2rem;font-weight:800;background:linear-gradient(135deg,#1A6FD4,#1BBFAA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">ScaleSite Media</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Our Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Start a Project →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Premium Web Agency</span>
+    </div>
+    <h1>
+      We Build<br>
+      <span class="grad-text">Digital Experiences</span><br>
+      <span class="light-text">That Scale.</span>
+    </h1>
+    <p class="hero-sub">High-performance websites crafted to captivate your audience, outperform competitors, and grow your business.</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-main">View Our Work ↓</a>
+      <a href="#contact" class="btn-ghost">Start a Project →</a>
+    </div>
+  </div>
+  <div class="hero-float">
+    <div class="float-card"><div class="float-card-label">Sites Launched</div><div class="float-card-val">50+</div><div class="float-card-sub">and growing fast</div></div>
+    <div class="float-card"><div class="float-card-label">Client Satisfaction</div><div class="float-card-val">98%</div><div class="float-card-sub">5-star rated agency</div></div>
+    <div class="float-card"><div class="float-card-label">Avg Turnaround</div><div class="float-card-val">72h</div><div class="float-card-sub">design to delivery</div></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Web Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Brand Identity</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>SEO Strategy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Performance Dev</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Landing Pages</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>CMS Integration</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>UI / UX</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Digital Strategy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Web Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Brand Identity</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>SEO Strategy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Performance Dev</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Landing Pages</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>CMS Integration</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>UI / UX</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Digital Strategy</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-eyebrow"><span>What We Do</span></div>
+  <h2 class="section-heading reveal">Everything You Need<br>to Win Online.</h2>
+  <p class="section-sub reveal d1">From stunning design to technical perfection — we handle everything so you can focus on your business.</p>
+  <div class="services-grid reveal">
+    <div class="service-card"><div class="service-num">01</div><div class="svc-icon">🎨</div><h3>Brand & Web Design</h3><p>Pixel-perfect visuals that communicate your story with authority. Every element — intentional, every pixel — deliberate.</p><div class="svc-arrow">→</div></div>
+    <div class="service-card"><div class="service-num">02</div><div class="svc-icon">⚡</div><h3>Performance Development</h3><p>Lightning-fast builds on modern stacks. 90+ Lighthouse scores, mobile-first, SEO-optimized from day one.</p><div class="svc-arrow">→</div></div>
+    <div class="service-card"><div class="service-num">03</div><div class="svc-icon">📄</div><h3>Landing Pages</h3><p>High-converting pages for campaigns and launches. Every section engineered with a singular conversion goal.</p><div class="svc-arrow">→</div></div>
+    <div class="service-card"><div class="service-num">04</div><div class="svc-icon">🔍</div><h3>SEO & Optimization</h3><p>Get found. We optimize architecture, on-page content, and technical SEO so you rank and convert — consistently.</p><div class="svc-arrow">→</div></div>
+    <div class="service-card"><div class="service-num">05</div><div class="svc-icon">🌐</div><h3>CMS & Integrations</h3><p>Webflow, WordPress, and custom CMS setups giving you full control without ever touching a line of code.</p><div class="svc-arrow">→</div></div>
+    <div class="service-card"><div class="service-num">06</div><div class="svc-icon">🔧</div><h3>Maintenance & Support</h3><p>Ongoing care plans keeping your site secure, updated, and performing at absolute peak — always.</p><div class="svc-arrow">→</div></div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section id="work">
+  <div class="section-eyebrow" style="position:relative;z-index:2;"><span>Portfolio</span></div>
+  <h2 class="section-heading reveal" style="position:relative;z-index:2;">Live Website<br>Showcase.</h2>
+  <p class="section-sub reveal d1" style="position:relative;z-index:2;">Scroll through real client work — right here, without leaving this page.</p>
+  <div class="demo-tabs reveal d2">
+    <button class="demo-tab active" onclick="switchDemo(this,'https://la-volta-boston.com','la-volta-boston.com','La Volta Boston','Restaurant')">La Volta Boston</button>
+    <button class="demo-tab" onclick="switchDemo(this,'https://example.com','example.com','Example Site','Web Design')">Sample Site</button>
+    <button class="demo-tab" onclick="switchDemo(this,'https://stripe.com','stripe.com','Stripe — SaaS Reference','SaaS')">SaaS Reference</button>
+  </div>
+  <div class="demo-stage reveal d3">
+    <div class="demo-chrome">
+      <div class="chrome-dots">
+        <div class="chrome-dot red"></div>
+        <div class="chrome-dot yellow"></div>
+        <div class="chrome-dot green"></div>
+      </div>
+      <div class="chrome-url" id="dUrl">la-volta-boston.com</div>
+    </div>
+    <iframe id="dFrame" class="demo-frame" src="https://la-volta-boston.com" title="Portfolio preview" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" loading="lazy"></iframe>
+    <div class="demo-footer">
+      <div><h4 id="dTitle">La Volta Boston</h4><span id="dDesc">Live client website</span></div>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <span class="demo-tag" id="dTag">Restaurant</span>
+        <a id="dLink" href="https://la-volta-boston.com" target="_blank" rel="noopener" class="demo-open">Open Live Site ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="section-eyebrow"><span>How It Works</span></div>
+  <h2 class="section-heading reveal">From Vision<br>to Launch.</h2>
+  <p class="section-sub reveal d1">A streamlined four-step process built for speed — without sacrificing quality or detail.</p>
+  <div class="process-row">
+    <div class="process-step reveal d1"><div class="step-dot">01</div><h3>Discovery</h3><p>We learn your goals, brand, and audience. Usually just 30 minutes to align fully.</p></div>
+    <div class="process-step reveal d2"><div class="step-dot">02</div><h3>Design</h3><p>Full visual mockup in 48–72 hours. Unlimited revisions until it's exactly right.</p></div>
+    <div class="process-step reveal d3"><div class="step-dot">03</div><h3>Development</h3><p>Responsive, fast, optimized. CMS, forms, and all integrations fully handled.</p></div>
+    <div class="process-step reveal d4"><div class="step-dot">04</div><h3>Launch & Scale</h3><p>We go live, manage DNS, then grow your presence through SEO and ongoing support.</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-eyebrow"><span>Client Love</span></div>
+  <h2 class="section-heading reveal">What Clients<br>Are Saying.</h2>
+  <p class="section-sub reveal d1">Real results from real businesses we've helped grow online.</p>
+  <div class="testi-grid">
+    <div class="testi-card reveal d1">
+      <div class="testi-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <blockquote>"ScaleSite completely transformed our online presence. Within two weeks of launching, inquiries doubled. The design is stunning and the site is blazing fast."</blockquote>
+      <div class="testi-author"><div class="testi-avatar">MR</div><div><h5>Marco Reyes</h5><span>Owner, Reyes Contracting</span></div></div>
+    </div>
+    <div class="testi-card reveal d2">
+      <div class="testi-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <blockquote>"I was blown away by the speed and quality. Our new site looks like it belongs alongside the biggest brands in our industry. Absolutely worth every penny."</blockquote>
+      <div class="testi-author"><div class="testi-avatar" style="background:linear-gradient(135deg,#1BBFAA,#0F8070);">SP</div><div><h5>Sofia Patel</h5><span>Founder, Lumière Studio</span></div></div>
+    </div>
+    <div class="testi-card reveal d3">
+      <div class="testi-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+      <blockquote>"They listened, understood our brand, and delivered beyond our expectations. Our landing page drives reservations daily without running a single ad."</blockquote>
+      <div class="testi-author"><div class="testi-avatar" style="background:linear-gradient(135deg,#0C447C,#0A1628);">JK</div><div><h5>James Kovacs</h5><span>GM, Ember & Oak Kitchen</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="cglow cg1"></div>
+  <div class="cglow cg2"></div>
+  <div class="section-eyebrow" style="justify-content:center;"><span>Get In Touch</span></div>
+  <h2 class="section-heading reveal">Ready to Build<br>Something Exceptional?</h2>
+  <p class="section-sub reveal d1">Free consultation — no pressure, just a conversation about your vision.</p>
+  <div class="contact-methods reveal d2">
+    <a href="mailto:scalesitemedia@gmail.com" class="contact-card"><div class="contact-icon">✉️</div>scalesitemedia@gmail.com</a>
+    <a href="tel:7023519253" class="contact-card"><div class="contact-icon">📞</div>(702) 351-9253</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <img src="ScaleSiteMedia_LOGO.png" alt="ScaleSite Media" onerror="this.style.display='none'">
+  </div>
+  <p>© 2025 ScaleSite Media. All rights reserved.</p>
+  <p>scalesitemedia@gmail.com · (702) 351-9253</p>
+</footer>
+
+<script>
+// Cursor
+const cur=document.getElementById('cursor'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function animR(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animR);})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='52px';ring.style.height='52px';ring.style.opacity='0.35';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.6';});
+});
+
+// Scrolled nav
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>40));
+
+// Demo switcher
+function switchDemo(btn,url,label,title,tag){
+  document.querySelectorAll('.demo-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('dUrl').textContent=label;
+  document.getElementById('dTitle').textContent=title;
+  document.getElementById('dTag').textContent=tag;
+  document.getElementById('dLink').href=url;
+  const f=document.getElementById('dFrame');
+  f.src='';setTimeout(()=>f.src=url,80);
+}
+
+// Scroll reveal
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Logo: try to load from same directory (when opened as file)
+document.querySelectorAll('img[src="ScaleSiteMedia_LOGO.png"]').forEach(img=>{
+  img.onerror=function(){this.style.display='none';const s=this.nextElementSibling;if(s)s.style.display='block';};
+});
+</script>
+</body>
+</html>
